@@ -1,4 +1,113 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:250541038
+AD-SOYAD:Muhammed Metin Kızıl
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+Seçtiğim algoritma: Optimum bütçeli market alış verişi algoritması
+
+  FONKSIYON OptimumAlisverisYap(ALISVERIS_LISTESI, BUTCE, FIYAT_VERITABANI):
+
+    // 1. Başlangıç Değerlerinin Tanımlanması
+    KALAN_BUTCE = BUTCE
+    SATIN_ALINACAK_LISTE = BOS_LISTE
+    TOPLAM_TUTAR = 0
+    ONCELIKLI_ALISVERIS_LISTESI = ListeyiOnceliklendir(ALISVERIS_LISTESI) // Öncelik Belirleme Fonksiyonu çağrılır
+
+    // 2. Ana Döngü: Listenin Öncelik Sırasına Göre İşlenmesi
+    // Listenin her bir elemanı (urun) için tekrar eden işlem (döngü)
+    FOR urun IN ONCELIKLI_ALISVERIS_LISTESI DO:
+
+        // 3. Koşullu Durum: Ürün Bilgilerini Kontrol Et
+        urun_ismi = urun.isim
+        gerekli_miktar = urun.miktar
+
+        // Veritabanından güncel bilgileri çek
+        urun_bilgisi = FIYAT_VERITABANI.AlUrunBilgisi(urun_ismi)
+
+        IF urun_bilgisi.bulundu == YANLIS THEN
+            // Koşul: Ürün veritabanında yoksa
+            CIKTI_YAZ("UYARI: " + urun_ismi + " bulunamadı. Atlanıyor.")
+            CONTINUE // Döngünün bir sonraki elemanına geç
+        END IF
+
+        // 4. Fiyat ve İndirim Hesaplamaları
+        birim_fiyat = urun_bilgisi.fiyat
+        stok_miktari = urun_bilgisi.stok
+
+        // Koşul: İndirim var mı?
+        IF urun_bilgisi.indirim_var == DOGRU THEN
+            etkin_fiyat = birim_fiyat - urun_bilgisi.indirim_tutari
+        ELSE
+            etkin_fiyat = birim_fiyat
+        END IF
+
+        // 5. Satın Alınabilecek Miktarın Belirlenmesi
+        // Koşul: İstenen miktar stokta var mı?
+        satinalinabilecek_miktar = MIN(gerekli_miktar, stok_miktari)
+        
+        // Hesaplanan toplam fiyat
+        urun_toplam_fiyati = satinalinabilecek_miktar * etkin_fiyat
+
+        // 6. Koşullu Durum: Bütçe Kontrolü
+        IF TOPLAM_TUTAR + urun_toplam_fiyati <= BUTCE THEN
+            // Koşul: Ürünü satın almaya bütçe yetiyor
+            
+            // Satın alma işlemini kaydet
+            SATIN_ALINACAK_LISTE.EKLE({"isim": urun_ismi, 
+                                      "miktar": satinalinabilecek_miktar, 
+                                      "fiyat": urun_toplam_fiyati})
+            
+            // Bütçe ve toplam tutarı güncelle
+            TOPLAM_TUTAR = TOPLAM_TUTAR + urun_toplam_fiyati
+            KALAN_BUTCE = BUTCE - TOPLAM_TUTAR
+            
+            CIKTI_YAZ(urun_ismi + ": " + satinalinabilecek_miktar + " adet sepete eklendi.")
+
+        ELSE
+            // Koşul: Ürünü tamamen almaya bütçe yetmiyor. Kısmen alınabilir mi?
+            
+            // Kısmi alım için kaç adet alınabilir hesapla (tekrar eden işlem/döngü de kullanılabilir)
+            max_alinabilir_miktar = ZEMINE_YUVARLA(KALAN_BUTCE / etkin_fiyat)
+            
+            IF max_alinabilir_miktar > 0 THEN
+                // Koşul: Kısmen de olsa almaya yetiyor
+                kısmi_tutar = max_alinabilir_miktar * etkin_fiyat
+                
+                // Satın alma işlemini kaydet
+                SATIN_ALINACAK_LISTE.EKLE({"isim": urun_ismi, 
+                                          "miktar": max_alinabilir_miktar, 
+                                          "fiyat": kısmi_tutar})
+
+                // Bütçe ve toplam tutarı güncelle
+                TOPLAM_TUTAR = TOPLAM_TUTAR + kısmi_tutar
+                KALAN_BUTCE = BUTCE - TOPLAM_TUTAR
+                
+                CIKTI_YAZ(urun_ismi + ": Bütçe yetersizliğinden " + max_alinabilir_miktar + " adet sepete eklendi.")
+
+            ELSE
+                // Koşul: Hiçbir adetini almaya bütçe yetmiyor
+                CIKTI_YAZ(urun_ismi + ": Bütçe yetersizliği nedeniyle atlanıyor.")
+            END IF
+
+        END IF
+
+    END FOR // Ana döngü sonu
+
+    // 7. Çıktıların Gösterilmesi (Sonuç)
+    CIKTI_YAZ("--- ALIŞVERİŞ SONUÇLARI ---")
+    CIKTI_YAZ("Toplam Harcama: " + TOPLAM_TUTAR)
+    CIKTI_YAZ("Kalan Bütçe: " + KALAN_BUTCE)
+    
+    // Satın alınan ürünlerin listesini döndür
+    RETURN SATIN_ALINACAK_LISTE, KALAN_BUTCE
+
+// --- YARDIMCI FONKSİYONLAR ---
+
+FONKSIYON ListeyiOnceliklendir(ALISVERIS_LISTESI):
+    // Bu kısım, algoritmanın verimliliği için kritiktir. 
+    // Önceliklendirme, temel ihtiyaçlara, indirim oranına veya ürünün birim fiyatına göre yapılabilir.
+    
+    // Örnek: Ürünleri (Ekmek, Süt gibi) "Temel İhtiyaç" ve "Diğer" olarak ayırıp, 
+    // Temel İhtiyaçları listenin başına koyarak önceliklendir.
+    
+    ONCELIKLI_LISTE = ALISVERIS_LISTESI.SIRALA_AZALAN(urun.onem_derecesi) // Önem derecesine göre sırala
+    RETURN ONCELIKLI_LISTE
