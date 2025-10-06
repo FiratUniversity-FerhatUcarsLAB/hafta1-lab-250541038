@@ -1,4 +1,52 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:250541038
+AD-SOYAD:Muhammed Metin Kızıl
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+seçtiğim algoritma Tic-Tac-Toe’da kazanma stratejisi 
+
+FONKSIYON En_İyi_Hamleyi_Bul(Tahta, Oyuncu):
+    // 1. Kazanma Hamlesini Kontrol Et (Oyuncunun Kazanmasını Sağlayan Hamle)
+    EĞER Kazanma_Hamlesi_Var_İSE(Tahta, Oyuncu):
+        DÖNDÜR Kazanma_Hamlesini
+    
+    // 2. Engelleme Hamlesini Kontrol Et (Rakibin Kazanmasını Engelleyen Hamle)
+    Rakip = (Oyuncu == 'X' ? 'O' : 'X')
+    EĞER Kazanma_Hamlesi_Var_İSE(Tahta, Rakip):
+        DÖNDÜR Kazanma_Hamlesini  // Rakibin kazanmasını engelleyen hamle
+    
+    // 3. Çatal (Fork) Oluşturma Hamlesini Kontrol Et
+    // İki veya daha fazla potansiyel kazanma çizgisi yaratan hamle.
+    EĞER Çatal_Oluşturma_Hamlesi_Var_İSE(Tahta, Oyuncu):
+        DÖNDÜR Çatal_Oluşturma_Hamlesini
+        
+    // 4. Rakibin Çatalını Engelleme Hamlesini Kontrol Et
+    // Rakibin iki kazanma tehdidi oluşturmasını engelleyen hamle.
+    Hamle = Rakip_Çatalını_Engelle(Tahta, Rakip, Oyuncu)
+    EĞER Hamle boş DEĞİL İSE:
+        DÖNDÜR Hamle
+        
+    // 5. Merkez (Orta) Hamlesini Kontrol Et
+    EĞER Tahta[1][1] 'Boş' İSE: // Merkez, genellikle en iyi pozisyondur.
+        DÖNDÜR [1][1]
+
+    // 6. Karşı Köşe Hamlesini Kontrol Et
+    // Rakip bir köşedeyse, onun çapraz karşısındaki köşeyi al. Bu, çatal kurmasını       	engeller.
+	Hamle = Karsi_Koseyi_Bul(Tahta, Rakip)
+	EĞER Hamle boş DEĞİL İSE:
+            DÖNDÜR Hamle
+     
+    // 7. Köşe Hamlelerini Kontrol Et
+    // Köşeler merkezden sonraki en güçlü pozisyonlardır.
+    KÖŞELER = ([0][0], [0][2], [2][0], [2][2])
+    HER KÖŞE için KÖŞELERDE:
+        EĞER Tahta[KÖŞE] 'Boş' İSE:
+            DÖNDÜR KÖŞE
+            
+    // 8. Kenar Hamlelerini Kontrol Et
+    KENARLAR = ([0][1], [1][0], [1][2], [2][1])
+    HER KENAR için KENARLARDA:
+        EĞER Tahta[KENAR] 'Boş' İSE:
+            DÖNDÜR KENAR
+
+    // Eğer tahta doluysa veya hiçbir stratejik hamle kalmadıysa, (Oyun bitti veya herhangi bir boş yer kalmadı)
+    DÖNDÜR HATA VEYA Boş_Hamle
