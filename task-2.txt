@@ -2,7 +2,7 @@
 AD-SOYAD:Muhammed Metin Kızıl
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
-seçtiğim algoritma Tic-Tac-Toe’da kazanma stratejisi 
+Seçtiğim algoritma Tic-Tac-Toe’da kazanma stratejisi 
 
 FONKSIYON En_İyi_Hamleyi_Bul(Tahta, Oyuncu):
     // 1. Kazanma Hamlesini Kontrol Et (Oyuncunun Kazanmasını Sağlayan Hamle)
