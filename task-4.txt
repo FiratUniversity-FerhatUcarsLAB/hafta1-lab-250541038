@@ -1,4 +1,94 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:250541038
+AD-SOYAD:Muhammed Metin Kızıl
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+N kişi için adil pasta paylaşımı ile ilgili algoritma
+
+LLM ile yaptığım konuşma:
+hocam şimdi problem çözme algoritması ile alakalı bir sözde kod yazacaz bunda öğrenmeyi hedeflediğim konular Karmaşık problemi parçalara bölme
+Sistematik yaklaşım geliştirme
+Optimizasyon düşüncesi
+Edge caseleri (özel durumları) düşünme
+Bu konularda kendimi geliştirebilecek basit bir örnekle başlayalım
+
+
+N kişi için adil pasta paylaşımı adım adım algoritma geliştirmek istiyorum. Koşullu durumları ve tekrar eden işlemleri de içeren detaylı bir pseudocode yazmama yardım eder misin?
+
+
+FONKSIYON AdaletliPastaPaylasimi(kisi_listesi):
+
+  // Başlangıçtaki kişi sayısını sakla, çünkü 1/N oranı hep buna göre olacak.
+  DEĞİŞKEN N_baslangic = kisi_listesi'nin eleman sayısı
+  DEĞİŞKEN kalan_kisiler = kisi_listesi
+  
+  // =================================================================
+  // TEKRAR EDEN İŞLEM (ANA DÖNGÜ):
+  // Grupta 2'den fazla kişi olduğu sürece paylaşım turlarına devam et.
+  // Bu döngü, problemi her seferinde bir küçülterek çözer (Parçalara Bölme).
+  // =================================================================
+  WHILE kalan_kisiler'in sayısı > 2:
+    
+    YAZDIR (kalan_kisiler'in sayısı + " kişi için yeni tur başladı.")
+    
+    // a) İlk Hamle: Sıradaki ilk kişi bir dilim keser.
+    DEĞİŞKEN kesici = kalan_kisiler[0]
+    DEĞİŞKEN mevcut_dilim = kesici, pastadan (1 / N_baslangic) kadar kesti.
+    DEĞİŞKEN son_dokunan = kesici
+
+    // ===============================================================
+    // TEKRAR EDEN İŞLEM (İÇ DÖNGÜ):
+    // Sıradaki diğer kişiler kesilen dilimi tek tek değerlendirir.
+    // ===============================================================
+    DÖNGÜ i = 1'den (kalan_kisiler'in sayısı - 1)'e KADAR:
+      DEĞİŞKEN degerlendiren_kisi = kalan_kisiler[i]
+
+      // -----------------------------------------------------------
+      // KOŞULLU DURUM:
+      // Değerlendiren kişi, dilimin pastanın 1/N'inden büyük olduğunu düşünüyor mu?
+      // -----------------------------------------------------------
+      EĞER degerlendiren_kisi'nin_degerlendirmesi(mevcut_dilim) > (1 / N_baslangic) İSE:
+        
+        // Dilimi adil bulduğu boyuta kadar küçültür (azaltır).
+        degerlendiren_kisi, mevcut_dilim'i (1 / N_baslangic) boyutuna küçülttü.
+        
+        // Dilime en son dokunan kişi artık o olur.
+        son_dokunan = degerlendiren_kisi
+        YAZDIR (degerlendiren_kisi.isim + " dilimi küçülttü.")
+        
+      DEĞİLSE:
+        YAZDIR (degerlendiren_kisi.isim + " dilimi uygun buldu.")
+      BİTTİ // EĞER koşulunun sonu
+      
+    DÖNGÜ SONU // İç döngünün sonu
+
+    // c) Dilimi Alma: T-shirtün en son dokunan kişi dilimi alır.
+    YAZDIR (son_dokunan.isim + " dilimi aldı ve ayrıldı.")
+    son_dokunan'a mevcut_dilim'i ver.
+    kalan_kisiler listesinden son_dokunan'ı çıkar.
+    
+  WHILE SONU // Ana döngünün sonu
+
+  // =================================================================
+  // ÖZEL DURUM (FINAL PAYLAŞIMI):
+  // Geriye sadece 2 kişi kaldığında en adil yöntem uygulanır.
+  // =================================================================
+  EĞER kalan_kisiler'in sayısı == 2 İSE:
+    YAZDIR ("Final turu: Son 2 kişi için paylaşım yapılıyor.")
+    DEĞİŞKEN kisi_A = kalan_kisiler[0]
+    DEĞİŞKEN kisi_B = kalan_kisiler[1]
+    
+    // Biri keser...
+    (dilim1, dilim2) = kisi_A, kalan pastayı ikiye böldü.
+    
+    // Diğeri seçer.
+    kisi_B'nin_sectigi_dilim = kisi_B, (dilim1, dilim2)'den birini seçti.
+    kisi_A'nin_aldigi_dilim = kalan diğer dilim.
+    
+    kisi_A'ya kisi_A'nin_aldigi_dilim'i ver.
+    kisi_B'ye kisi_B'nin_sectigi_dilim'i ver.
+    
+  BİTTİ // EĞER koşulunun sonu
+  
+  YAZDIR ("Pasta paylaşımı adil bir şekilde tamamlandı.")
+
+BİTTİ // FONKSİYON sonu
