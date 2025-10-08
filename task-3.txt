@@ -1,4 +1,84 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:250541038
+AD-SOYAD:Muhammed Metin Kızıl 
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+Telefon rehberini alfabetik sıralama algoritması 
+
+// =================================================================
+// ANA FONKSİYON: HIZLI SIRALA
+// Bu fonksiyon, "Böl ve Yönet" mantığını kurar.
+// =================================================================
+FONKSİYON HizliSirala(Rehber, alt_sinir, ust_sinir):
+
+  // ---------------------------------------------------------------
+  // KOŞULLU DURUM (1): Algoritmanın durma noktası.
+  // Eğer alt sınır üst sınırdan küçükse, yani listede en az 2 eleman varsa,
+  // sıralama işlemine devam et. Aksi halde liste zaten sıralıdır.
+  // ---------------------------------------------------------------
+  EĞER alt_sinir < ust_sinir İSE:
+
+    // Listeyi pivota göre ikiye ayır ve pivotun son indeksini al.
+    pivot_indeksi = Ayirma(Rehber, alt_sinir, ust_sinir)
+
+    // Özyineleme yoluyla TEKRAR ETME işlemi:
+    // Aynı fonksiyonu şimdi de pivotun solundaki alt liste için çağır.
+    HizliSirala(Rehber, alt_sinir, pivot_indeksi - 1)
+
+    // Aynı fonksiyonu şimdi de pivotun sağındaki alt liste için çağır.
+    HizliSirala(Rehber, pivot_indeksi + 1, ust_sinir)
+  
+  BİTTİ // EĞER koşulunun sonu
+
+BİTTİ // FONKSİYON sonu
+
+
+// =================================================================
+// YARDIMCI FONKSİYON: AYIRMA
+// Bu fonksiyon, listenin asıl işi yapan kısmıdır.
+// =================================================================
+FONKSİYON Ayirma(Rehber, alt_sinir, ust_sinir):
+
+  // Pivot olarak listenin son elemanının ismini seç.
+  pivot_isim = Rehber[ust_sinir].isim
+  
+  // "Küçükler" bölümünün sınırını tutan değişken.
+  // Başlangıçta bu bölüm boş olduğu için, alt sınırın bir eksiği ile başlar.
+  i = alt_sinir - 1
+
+  // ---------------------------------------------------------------
+  // TEKRAR EDEN İŞLEM (DÖNGÜ): Listenin elemanlarını tek tek dolaşır.
+  // alt_sinir'dan başlar ve pivot'a kadar (ust_sinir-1) devam eder.
+  // ---------------------------------------------------------------
+  DÖNGÜ j = alt_sinir'dan ust_sinir - 1'e KADAR:
+
+    // -------------------------------------------------------------
+    // KOŞULLU DURUM (2): Karşılaştırma.
+    // O anki kişinin (Rehber[j]) ismi, pivotun isminden alfabetik olarak
+    // önce mi geliyor?
+    // -------------------------------------------------------------
+    EĞER Rehber[j].isim < pivot_isim İSE:
+    
+      // Sınırı bir artır.
+      i = i + 1
+      
+      // Bulunan küçük elemanı (Rehber[j]) "küçükler" bölümüne (Rehber[i]) taşı.
+      // Bu işlem, iki kişinin yerini değiştirmektir (swap).
+      Rehber[i] VE Rehber[j] NESNELERİNİ YER DEĞİŞTİR
+      
+    BİTTİ // EĞER koşulunun sonu
+    
+  DÖNGÜ SONU // j döngüsünün sonu
+
+  // Döngü bittiğinde pivotu doğru yerine (küçükler bölümünün hemen sağına) taşı.
+  Rehber[i + 1] VE Rehber[ust_sinir] NESNELERİNİ YER DEĞİŞTİR
+  
+  // Pivotun yeni indeksini ana fonksiyona geri döndür.
+  DÖNDÜR (i + 1)
+
+BİTTİ // FONKSİYON sonu
+
+
+// --- ALGORİTMAYI BAŞLATMA ---
+// Sıralama işlemini başlatmak için ana fonksiyonu tüm liste için çağırırız.
+// Örneğin, 100 elemanlı bir rehber için (indeksler 0-99):
+// HizliSirala(BenimRehberim, 0, 99)
