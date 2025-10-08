@@ -4,6 +4,13 @@ AD-SOYAD:Muhammed Metin Kızıl
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
 Telefon rehberini alfabetik sıralama algoritması 
 
+LLM le yaptığım konuşma:
+*Sıralama algoritması oluşturucam ama öncelikle bana sıralama algoritması türleri hakkında bilgi vermen gerek
+*Benden belirli bir algoritma istemiyor ama ben quick sort tan yapmak istiyorum
+*Şimdi seninle birlikte yazacağımız algoritmanın konusunu seçelim
+*Evet bencede temelden başlamak mantıklı geldi en başta bana temmelleri öğrenmemde yardımcı ol sonra ödevim için detaylı bir algoritma oluşturalım
+*Hocam telefon rehberindeki kişileri alfabetik bir şekilde sıralamak için için adım adım algoritma geliştirmek istiyorum. Koşullu durumları ve tekrar eden işlemleri de içeren detaylı bir pseudocode yazmama yardım eder misin?
+
 // =================================================================
 // ANA FONKSİYON: HIZLI SIRALA
 // Bu fonksiyon, "Böl ve Yönet" mantığını kurar.
