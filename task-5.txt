@@ -1,4 +1,49 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:Muhammed Metin Kızıl
+AD-SOYAD:250541038
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+Seçtiğim algoritma "Algoriitma Öğrenme" 
+AI ile olan diyaloğum:
+https://g.co/gemini/share/f160e05b7d04
+
+# 1. Başlangıç Değerlerini Ayarla
+BAŞLA
+    Öğrenci_Sayısı = 0
+    Toplam_Not = 0
+    Başarılı_Sayısı = 0
+
+# 2. Giriş: Kaç Öğrenci İşlenecek?
+    KULLANICIDAN ÖĞRENCİ_SAYISI değerini AL
+
+# 3. Tekrar Eden İşlem (Döngü)
+# i'yi 1'den (Öğrenci_Sayısı)'na kadar birer birer artırarak tekrar et
+    i = 1'DEN ÖĞRENCİ_SAYISI'na KADAR DÖNGÜ BAŞLAT
+        
+        # 3.1. Giriş: Öğrencinin Notunu Al
+        EKRANA "i. Öğrencinin Notunu Girin:" YAZ
+        KULLANICIDAN MEVCUT_NOT değerini AL
+
+        # 3.2. Toplama İşlemi
+        TOPLAM_NOT = TOPLAM_NOT + MEVCUT_NOT
+
+        # 3.3. Koşullu Durum (Başarılı mı?)
+        EĞER MEVCUT_NOT >= 50 İSE
+            BAŞARILI_SAYISI = BAŞARILI_SAYISI + 1  # Başarılı sayısını artır
+        DEĞİLSE (ELSE)
+            # Başarısız ise herhangi bir işlem yapmaya gerek yok, sadece geç.
+            DEVAM ET
+        EĞER BİTİR
+
+    DÖNGÜ BİTİR
+
+# 4. Sonuç Hesaplama ve Çıktı
+    # Önce Toplam_Not'u Öğrenci_Sayısı'na bölerek Ortalama'yı bul
+    # (Öğrenci_Sayısı'nın sıfır olmadığını varsayıyoruz, aksi takdirde kontrol eklenmeli)
+    ORTALAMA = TOPLAM_NOT / ÖĞRENCİ_SAYISI
+    
+    # Sonuçları Ekrana Yazdır
+    EKRANA "----------------------------------------" YAZ
+    EKRANA "Genel Not Ortalaması: " + ORTALAMA YAZ
+    EKRANA "Başarılı Öğrenci Sayısı (>=50): " + BAŞARILI_SAYISI YAZ
+    
+DUR
